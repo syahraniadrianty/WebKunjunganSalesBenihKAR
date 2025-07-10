@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Form Kunjungan Sales Benih KAR</title>
+</head>
+<body onload="getLocation()">
+    <form id="FormKunjunganSalesBenihKAR">
+        <h2 style="text-align: center;">Daily Report Sales Benih KAR</h2>
+        <div>
+          <label for="nama_sales">Nama Sales:</label>
+          <select name="nama_sales" id="nama_sales" class="w-full border p-2 rounded" required>
+            <option value="">-- Pilih Nama Sales --</option>
+            <option value="Fahmi">Fahmi</option>
+            <option value="Patra">Patra</option>
+            <option value="Zainal">Zainal</option>
+            <option value="Zainal">Alip</option>
+          </select>
+        </div>
+
+      <div><label>Tanggal Kunjungan:</label><input type="date" id="tanggal_kunjungan"  name="tanggal_kunjungan" class="w-full border p-2 rounded" required></div>
+
+      <div>
+          <label for="kategori_toko">Kategori Toko:</label>
+          <select name="kategori_toko" id="kategori_toko" class="w-full border p-2 rounded" required>
+              <option value="">-- Pilih Kategori Toko --</option>
+              <option value="Distributor">Distributor</option>
+              <option value="R-1">R-1</option>
+              <option value="R-2">R-2</option>
+              <option value="R-3">R-3</option>
+              <option value="End_User">End User</option>
+          </select>
+      </div>
+      
+      <div><label>Nama Toko/Agen:</label><input type="text" id="nama_toko" name="nama_toko" placeholder="Masukkan Nama Toko/Agen" class="w-full border p-2 rounded" required style="text-transform: capitalize;" required></div>
+      
+
+     <div class="mb-3">
+            <label class="block mb-1">Status Toko/Agen:</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" id="statusProspect" name="status_toko" value="Prospect" class="mr-2">
+                Prospect
+              </label>
+              <label class="flex items-center">
+                <input type="radio" id="statusClosing" name="status_toko" value="Closing" class="mr-2">
+                Closing
+              </label>
+              <label class="flex items-center">
+                <input type="radio" id="statusExisting" name="status_toko" value="Existing" required class="mr-2">
+                Existing
+              </label>
+            </div>
+          </div>
+
+      <div><label for="jumlah_kunjungantoko">Kunjungan Toko Ke-:</label><input type="number" id="jumlah_kunjungantoko" name="jumlah_kunjungantoko" placeholder="Jumlah Kunjungan Kepada Toko Tersebut Pada Saat Ini" class="w-full border p-2 rounded" required></div>
+
+      <div class="mb-4">
+        <label for="provinsi" class="block mb-1">Provinsi:</label>
+        <select name="provinsi" id="provinsi" class="w-full border p-2 rounded" required>
+            <option value="">-- Provinsi --</option>
+            <option value="Jawa Barat">Jawa Barat</option>
+            <option value="Jawa Tengah">Jawa Tengah</option>
+            <option value="Jawa Timur">Jawa Timur</option>
+            <option value="Banten">Banten</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="kota_kabupaten" class="block mb-1">Kota/Kabupaten:</label>
+        <select name="kota_kabupaten" id="kota_kabupaten" class="w-full border p-2 rounded" required>
+              <option value="">-- Pilih Kota/Kabupaten --</option>
+        </select>
+      </div>
+
+      <script>
+          const cityOptions = {
+          "Jawa Barat": [
+            "Kabupaten Bandung", "Kabupaten Bandung Barat", "Kabupaten Bekasi", "Kabupaten Bogor",
+            "Kabupaten Ciamis", "Kabupaten Cianjur", "Kabupaten Cirebon", "Kabupaten Garut",
+            "Kabupaten Indramayu", "Kabupaten Karawang", "Kabupaten Kuningan", "Kabupaten Majalengka",
+            "Kabupaten Pangandaran", "Kabupaten Purwakarta", "Kabupaten Subang", "Kabupaten Sukabumi",
+            "Kabupaten Sumedang", "Kabupaten Tasikmalaya", "Kota Bandung", "Kota Banjar", "Kota Bekasi", "Kota Bogor",
+            "Kota Cimahi", "Kota Cirebon", "Kota Depok", "Kota Sukabumi", "Kota Tasikmalaya"
+          ],
+          "Jawa Tengah": [
+            "Kabupaten Banjarnegara", "Kabupaten Banyumas", "Kabupaten Batang", "Kabupaten Blora",
+            "Kabupaten Boyolali", "Kabupaten Brebes", "Kabupaten Cilacap", "Kabupaten Demak",
+            "Kabupaten Grobogan", "Kabupaten Jepara", "Kabupaten Karanganyar", "Kabupaten Kebumen",
+            "Kabupaten Kendal", "Kabupaten Klaten", "Kabupaten Kudus", "Kabupaten Magelang",
+            "Kabupaten Pati", "Kabupaten Pekalongan", "Kabupaten Pemalang", "Kabupaten Purbalingga",
+            "Kabupaten Purworejo", "Kabupaten Rembang", "Kabupaten Semarang", "Kabupaten Sragen",
+            "Kabupaten Sukoharjo", "Kabupaten Temanggung", "Kabupaten Wonogiri", "Kabupaten Wonosobo",
+            "Kabupaten Tegal", "Kota Magelang", "Kota Pekalongan", "Kota Salatiga", "Kota Semarang", "Kota Surakarta", "Kota Tegal"
+          ],
+          "Jawa Timur": [
+            "Kabupaten Bangkalan", "Kabupaten Banyuwangi", "Kabupaten Blitar", "Kabupaten Bojonegoro",
+            "Kabupaten Bondowoso", "Kabupaten Gresik", "Kabupaten Jember", "Kabupaten Jombang",
+            "Kabupaten Kediri", "Kabupaten Lamongan", "Kabupaten Lumajang", "Kabupaten Madiun",
+            "Kabupaten Magetan", "Kabupaten Malang", "Kabupaten Mojokerto", "Kabupaten Nganjuk",
+            "Kabupaten Ngawi", "Kabupaten Pacitan", "Kabupaten Pamekasan", "Kabupaten Pasuruan",
+            "Kabupaten Ponorogo", "Kabupaten Probolinggo", "Kabupaten Sampang", "Kabupaten Sidoarjo",
+            "Kabupaten Situbondo", "Kabupaten Sumenep", "Kabupaten Trenggalek", "Kabupaten Tuban",
+            "Kabupaten Tulungagung", "Kota Batu", "Kota Blitar", "Kota Kediri", "Kota Madiun",
+            "Kota Malang", "Kota Mojokerto", "Kota Pasuruan", "Kota Probolinggo", "Kota Surabaya"
+          ],
+          "Banten": [
+            "Kabupaten Lebak", "Kabupaten Pandeglang", "Kabupaten Serang", "Kabupaten Tangerang",
+            "Kota Cilegon", "Kota Serang", "Kota Tangerang", "Kota Tangerang Selatan"
+          ]
+        };
+
+        const provinsiSelect = document.getElementById("provinsi");
+        const citySelect = document.getElementById("kota_kabupaten");
+
+        provinsiSelect.addEventListener("change", function () {
+          const selectedProvinsi = this.value;
+          const cities = cityOptions[selectedProvinsi] || [];
+
+          // Kosongkan dulu isinya
+          citySelect.innerHTML = '<option value="">-- Pilih Kota/Kabupaten --</option>';
+
+          // Tambahkan opsi kota
+          cities.forEach(function (kota_kabupaten) {
+            const option = document.createElement("option");
+            option.value = kota_kabupaten;
+            option.textContent = kota_kabupaten;
+            citySelect.appendChild(option);
+          });
+        });
+      </script>
+
+      <div>
+          <label for="kecamatan">Kecamatan:</label>
+          <input type="text" id="kecamatan" name="kecamatan" placeholder="Masukkan Kecamatan" required style="text-transform: capitalize;" required>
+      </div>
+
+      <div>
+          <label for="kelurahan">Kelurahan:</label>
+          <input type="text" id="kelurahan" name="kelurahan" placeholder="Masukkan Kelurahan" required style="text-transform: capitalize;" required>
+      </div>
+
+      <div>
+        <label>Nama Pemilik Toko:</label>
+        <input type="text" id="nama_pemiliktoko" name="nama_pemiliktoko" placeholder="Masukkan Nama Pemilik Toko" class="w-full border p-2 rounded" required style="text-transform: capitalize;" required>
+      </div>
+
+      <div>
+            <label>Nomor Pemilik Toko:</label>
+            <input 
+              type="tel" 
+              id="nomor_pemiliktoko"
+              name="nomor_pemiliktoko" 
+              class="w-full border p-2 rounded" 
+              placeholder="Contoh: 081234567890 atau 0 jika tidak ada" 
+              pattern="0|[0-9]{10,15}" 
+              required 
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          </div>
+
+
+
+      <div>
+          <label for="kegiatan">Kegiatan:</label>
+          <select name="kegiatan" id="kegiatan" required class="w-full border p-2 rounded">
+              <option value="">-- Pilih Kegiatan --</option>
+              <option value="Penawaran & Pemberian Brosur">Penawaran & Pemberian Brosur</option>
+              <option value="Penjualan">Penjualan</option>
+              <option value="Cek Stock">Cek Stock</option>
+              <option value="Penagihan">Penagihan</option>
+              <option value="Kirim Barang">Kirim Barang</option>
+          </select>
+      </div>
+
+
+      <div class="md:col-span-2">
+          <label>Deskripsi Kegiatan:</label>
+          <textarea id="deskripsi_kegiatan" name="deskripsi_kegiatan" placeholder="Lengkapi Detail Kegiatan" class="w-full border p-2 rounded" required style="text-transform: capitalize;" required></textarea>
+      </div>
+
+      <div>
+        <label>Produk Pesaing:</label>
+        <input type="text" id="produk_pesaing" name="produk_pesaing" placeholder="Masukkan Produk Pesaing" class="w-full border p-2 rounded" required style="text-transform: capitalize;" required>
+      </div>
+
+      <div>
+        <label>Tempat Produksi Produk Pesaing:</label>
+        <input type="text" id="tempatproduksi_produkpesaing" name="tempatproduksi_produkpesaing" placeholder="Masukkan Tempat Produksi Produk Pesaing" class="w-full border p-2 rounded" required style="text-transform: capitalize;" required>
+      </div>
+
+      <div>
+          <label for="harga_produkpesaing">Harga Produk Pesaing:</label>
+          <input 
+              type="text" 
+              id="harga_produkpesaing" 
+              name="harga_produkpesaing" 
+              class="w-full border p-2 rounded" 
+              placeholder="Masukkan Info Harga Produk Pesaing"
+              required
+              pattern="^\d+(\.\d{1,2})?$"
+              title="Masukkan harga dengan format yang benar (misalnya: 1000 atau 1000.50). Hanya angka yang diperbolehkan."
+              oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
+      </div>
+
+      <div class="md:col-span-2">
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label for="qtyM70D">Qty Pengambilan M70D (Kg):</label>
+                <input type="text" id="qtyM70D" name="qtyM70D" placeholder="Masukkan Qty" required>
+              </div>
+          
+              <div>
+                <label for="HargaPengambilanM70D">Harga Pengambilan M70D (Rp):</label>
+                <input type="text" id="HargaPengambilanM70D" name="HargaPengambilanM70D" placeholder="Masukkan Harga Pengambilan" required>
+              </div>
+          
+              <div>
+                <label for="qtyM410">Qty Pengambilan M410 (Kg):</label>
+                <input type="text" id="qtyM410" name="qtyM410" placeholder="Masukkan Qty" required>
+              </div>
+          
+              <div>
+                <label for="HargaPengambilanM410">Harga Pengambilan M410 (Rp):</label>
+                <input type="text" id="HargaPengambilanM410" name="HargaPengambilanM410" placeholder="Masukkan Harga Pengambilan" required>
+              </div>
+          
+              <div>
+                <label for="qtyInpari32">Qty Pengambilan Inpari 32 (Kg):</label>
+                <input type="text" id="qtyInpari32" name="qtyInpari32" placeholder="Masukkan Qty" required>
+              </div>
+          
+              <div>
+                <label for="HargaPengambilanInpari32">Harga Pengambilan Inpari 32 (Rp):</label>
+                <input type="text" id="HargaPengambilanInpari32" name="HargaPengambilanInpari32" placeholder="Masukkan Harga Pengambilan" required>
+              </div>
+            </div>
+        </div>
+
+        <script>
+            function setupQtyValidation(inputId) {
+              const input = document.getElementById(inputId);
+          
+              input.addEventListener("input", function () {
+                // Cek jika ada karakter selain angka
+                if (/[^0-9]/.test(input.value)) {
+                  // Hapus karakter non-angka
+                  input.value = input.value.replace(/[^0-9]/g, '');
+                }
+              });
+            }
+          
+            // Menyiapkan validasi untuk setiap input
+            setupQtyValidation("qtyM70D");
+            setupQtyValidation("HargaPengambilanM70D");
+            setupQtyValidation("qtyM410");
+            setupQtyValidation("HargaPengambilanM410");
+            setupQtyValidation("qtyInpari32");
+            setupQtyValidation("HargaPengambilanInpari32");
+       </script>
+
+      <div class="mb-3">
+            <label class="block mb-1">Jenis Pembayaran:</label>
+            <div class="flex gap-2">
+              <label class="flex items-center">
+                <input type="radio" id="jenis_pembayaranCash" name="jenis_pembayaran" value="Cash" class="mr-2" required>
+                Cash
+              </label>
+              <label class="flex items-center">
+                <input type="radio" id="jenis_pembayaranTempo" name="jenis_pembayaran" value="Tempo" class="mr-2" required>
+                Tempo
+              </label>
+            </div>
+      </div>
+
+      <div><label>Foto Depan Toko:</label><input type="file" id="fototoko" name="fototoko" accept="image/*" required></div>
+    
+          <input type="hidden" name="latitude" id="latitude">
+          <input type="hidden" name="longitude" id="longitude">
+          <input type="hidden" name="fototoko" id="fototoko">
+          <input type="hidden" name="lokasi_toko" id="lokasi_toko" required>
+          <br><br>
+          <button type="submit">Kirim</button>
+    </form>
+
+    <script type="module">
+    const SUPABASE_URL = 'https://btmvdlpwjenhqzpfdckk.supabase.co'; // Ganti dengan URL-mu
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0bXZkbHB3amVuaHF6cGZkY2trIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3ODQyOTAsImV4cCI6MjA2NDM2MDI5MH0.ZBSRWHSY9sTf3fv6iYOqHqs9sx6fzTZsR7qrn8zJWmc'; // Ganti dengan anon key-mu
+
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const form = document.getElementById('FormKunjunganSalesBenihKAR');
+
+    // Dapatkan lokasi
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude, longitude } = pos.coords;
+      document.getElementById('lokasi_toko').value = `https://maps.google.com/?q=${latitude},${longitude}`;
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const fotoFile = formData.get('fototoko');
+
+      console.log('fotoFile:', fotoFile);
+
+      if (!fotoFile || fotoFile.size === 0) {
+        alert('Foto belum dipilih!');
+        return;
+      }
+
+      const ext = fotoFile.name.split('.').pop();
+      const fileName = `public/foto_${Date.now()}.${ext}`;
+
+
+      const { data: uploaded, error: uploadError } = await supabase.storage
+        .from('fototoko')
+        .upload(fileName, fotoFile);
+
+      console.log('Upload result:', uploaded);
+      console.error('Upload error detail:', uploadError);
+
+      if (uploadError) {
+        alert('Gagal upload foto');
+        return;
+      }
+
+// Lanjut ke public URL dan insert ke tabel
+
+      // 2. Ambil public URL
+      const { data: publicUrl } = supabase.storage
+        .from('fototoko')
+        .getPublicUrl(fileName);
+
+
+      // 3. Buat objek data untuk dimasukkan ke tabel
+      const payload = {
+        nama_sales: formData.get('nama_sales'),
+        tanggal_kunjungan: formData.get('tanggal_kunjungan'),
+        kategori_toko: formData.get('kategori_toko'),
+        nama_toko: formData.get('nama_toko'),
+        status_toko: formData.get('status_toko'),
+        jumlah_kunjungantoko: formData.get('jumlah_kunjungantoko'),
+        provinsi: formData.get('provinsi'),
+        kota_kabupaten: formData.get('kota_kabupaten'),
+        kecamatan: formData.get('kecamatan'),
+        kelurahan: formData.get('kelurahan'),
+        nama_pemiliktoko: formData.get('nama_pemiliktoko'),
+        nomor_pemiliktoko: formData.get('nomor_pemiliktoko'),
+        kegiatan: formData.get('kegiatan'),
+        deskripsi_kegiatan: formData.get('deskripsi_kegiatan'),
+        produk_pesaing: formData.get('produk_pesaing'),
+        tempatproduksi_produkpesaing: formData.get('tempatproduksi_produkpesaing'),
+        harga_produkpesaing: formData.get('harga_produkpesaing'),
+        qtyM70D: formData.get('qtyM70D'),
+        HargaPengambilanM70D: formData.get('HargaPengambilanM70D'),
+        qtyM410: formData.get('qtyM410'),
+        HargaPengambilanM410: formData.get('HargaPengambilanM410'),
+        qtyInpari32: formData.get('qtyInpari32'),
+        HargaPengambilanInpari32: formData.get('HargaPengambilanInpari32'),
+        jenis_pembayaran: formData.get('jenis_pembayaran'),
+        fototoko: publicUrl.publicUrl,
+        lokasi_toko: formData.get('lokasi_toko'),
+      };
+
+      // Tambahkan field lainnya kalau sudah siap
+
+      const { error } = await supabase
+        .from('FormKunjunganSalesBenihKAR')
+        .insert([payload]);
+
+      if (error) {
+        alert('Gagal simpan data!');
+        console.error(error);
+      } else {
+        alert('Data berhasil disimpan!');
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
